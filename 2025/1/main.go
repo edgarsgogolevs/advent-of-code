@@ -6,7 +6,25 @@ import (
 	"os"
 )
 
-func solve() {
+func solve2() {
+	f, err := os.Open("input")
+	if err != nil {
+		fmt.Println("unable to open input file")
+		return
+	}
+	defer f.Close()
+
+	dial := NewDial()
+
+	scan := bufio.NewScanner(f)
+	for scan.Scan() {
+		line := scan.Text()
+		dial.Turn(line)
+	}
+	fmt.Printf("Solution:\t%d\n", dial.Solution)
+}
+
+func solve1() {
 	f, err := os.Open("input")
 	if err != nil {
 		fmt.Println("Unable to read input file")
@@ -30,9 +48,11 @@ func solve() {
 
 func test() {
 	dial := NewDial()
-	fmt.Printf("%v\n", dial.Turn("L100"))
+	dial.Turn("R350")
+	fmt.Printf("Test solution: %d\n", dial.Solution)
 }
 
 func main() {
-	solve()
+	solve1()
+	solve2()
 }
